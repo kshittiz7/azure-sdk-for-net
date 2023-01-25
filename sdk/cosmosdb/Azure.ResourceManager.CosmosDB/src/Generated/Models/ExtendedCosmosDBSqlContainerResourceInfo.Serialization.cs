@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
                 writer.WriteObjectValue(ConflictResolutionPolicy);
             }
+            if (Optional.IsDefined(ClientEncryptionPolicy))
+            {
+                writer.WritePropertyName("clientEncryptionPolicy");
+                writer.WriteObjectValue(ClientEncryptionPolicy);
+            }
             if (Optional.IsDefined(AnalyticalStorageTtl))
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
@@ -62,6 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<int> defaultTtl = default;
             Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
             Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
+            Optional<ClientEncryptionPolicy> clientEncryptionPolicy = default;
             Optional<long> analyticalStorageTtl = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -145,7 +151,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     conflictResolutionPolicy = ConflictResolutionPolicy.DeserializeConflictResolutionPolicy(property.Value);
                     continue;
                 }
-                if (property.NameEquals("analyticalStorageTtl"u8))
+                if (property.NameEquals("clientEncryptionPolicy"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    clientEncryptionPolicy = ClientEncryptionPolicy.DeserializeClientEncryptionPolicy(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("analyticalStorageTtl"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -156,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ExtendedCosmosDBSqlContainerResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedCosmosDBSqlContainerResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, clientEncryptionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }

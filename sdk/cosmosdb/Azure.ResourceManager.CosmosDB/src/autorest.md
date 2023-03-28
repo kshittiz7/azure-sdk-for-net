@@ -292,6 +292,11 @@ rename-mapping:
   PrivilegeResource: MongoDBPrivilegeResourceInfo
   PrivilegeResource.db: DBName
   MinimalTlsVersion: CosmosDBMinimalTlsVersion
+  ClientEncryptionKeyGetPropertiesResource: CosmosDBSqlClientEncryptionKeyProperties
+  ClientEncryptionKeyResource: CosmosDBSqlClientEncryptionKeyResource
+  ClientEncryptionPolicy: CosmosDBClientEncryptionPolicy
+  ClientEncryptionIncludedPath: CosmosDBClientEncryptionIncludedPath
+  ClientEncryptionKeyGetResultData: CosmosDBSqlClientEncryptionKey
 
 prepend-rp-prefix:
 - UniqueKey
@@ -528,21 +533,6 @@ directive:
 - rename-model:
     from: RestorableTableGetResult
     to: RestorableTable
-- rename-model:
-    from: ClientEncryptionKeyGetPropertiesResource
-    to: CosmosDBSqlClientEncryptionKeyProperties
-- rename-model:
-    from: ClientEncryptionKeyResource
-    to: CosmosDBSqlClientEncryptionKeyResource
-- rename-model:
-    from: ClientEncryptionPolicy
-    to: CosmosDBClientEncryptionPolicy
-- rename-model:
-    from: ClientEncryptionIncludedPath
-    to: CosmosDBClientEncryptionIncludedPath
-- rename-model:
-    from: ClientEncryptionKeyGetResultData
-    to: CosmosDBSqlClientEncryptionKey
 # same as `Metric`
 - rename-model:
     from: Metric
